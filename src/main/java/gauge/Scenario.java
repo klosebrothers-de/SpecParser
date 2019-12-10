@@ -1,0 +1,39 @@
+package gauge;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Scenario implements HasTagsAndDescription {
+
+    private String heading;
+    private String description;
+    private List<Tag> tags = new ArrayList<>();
+    private List<Step> steps = new ArrayList<>();
+
+
+    public void setHeading(String heading) {
+        this.heading = heading;
+    }
+
+    @Override
+    public void addTag(String tag) {
+        tags.add(new Tag(tag));
+    }
+
+    @Override
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void addStep(String stepText) {
+        steps.add(new Step(stepText));
+    }
+
+    public String getHeading() {
+        return heading;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+}
