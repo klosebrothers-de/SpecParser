@@ -10,4 +10,9 @@ public class Step {
     public String getStepText() {
         return stepText;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return ((Step) obj).stepText.equals(stepText);
+    }
 }

@@ -10,4 +10,9 @@ public class Tag {
     public String getTagName() {
         return tagName;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return ((Tag) obj).tagName.equals(tagName);
+    }
 }

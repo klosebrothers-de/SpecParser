@@ -33,4 +33,12 @@ public class Specification implements HasTagsAndDescription {
     public String getDescription() {
         return description;
     }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public List<Scenario> getScenarios() {
+        return scenarios;
+    }
 }

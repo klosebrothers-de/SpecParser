@@ -36,4 +36,12 @@ public class Scenario implements HasTagsAndDescription {
     public String getDescription() {
         return description;
     }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public List<Step> getSteps() {
+        return steps;
+    }
 }

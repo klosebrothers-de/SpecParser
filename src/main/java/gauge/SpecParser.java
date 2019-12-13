@@ -57,7 +57,9 @@ public class SpecParser {
         if (!tags.startsWith("Tags: ")) {
             return node;
         }
-        Arrays.stream(tags.substring(6).split(",")).forEach(hasTagsAndDescription::addTag);
+        Arrays.stream(tags.substring(6).split(","))
+                .map(String::trim)
+                .forEach(hasTagsAndDescription::addTag);
         return node.getNext();
     }
 
@@ -77,7 +79,7 @@ public class SpecParser {
     private static <A> Node maybe(BiFunction<Node, A, Node> f, Node node, A a) {
         try {
             return f.apply(node, a);
-        } catch (ClassCastException e) {
+        } catch (Exception e) {
             return node;
         }
     }
@@ -89,7 +91,7 @@ public class SpecParser {
             while (true) {
                 node = f.apply(node, a);
             }
-        } catch (ClassCastException e) {
+        } catch (Exception e) {
             return node;
         }
     }
