@@ -41,4 +41,12 @@ public class Specification implements HasTagsAndDescription {
     public List<Scenario> getScenarios() {
         return scenarios;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Specification specification = (Specification) obj;
+        return specification.getHeading().equals(heading) &&
+                specification.getDescription().equals(description) &&
+                scenarios.containsAll(specification.getScenarios());
+    }
 }

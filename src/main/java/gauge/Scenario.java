@@ -44,4 +44,12 @@ public class Scenario implements HasTagsAndDescription {
     public List<Step> getSteps() {
         return steps;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Scenario scenario = (Scenario) obj;
+        return scenario.heading.equals(heading) &&
+                scenario.description.equals( description) &&
+                steps.containsAll(scenario.getSteps());
+    }
 }
