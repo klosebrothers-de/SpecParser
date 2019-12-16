@@ -1,8 +1,6 @@
 package gauge;
 
-import org.commonmark.node.Heading;
-import org.commonmark.node.Node;
-import org.commonmark.node.Text;
+import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
 
 import java.util.Arrays;
@@ -23,8 +21,39 @@ public class SpecParser {
         node = headingSpec(node.getFirstChild(), specification);
         node = maybe(SpecParser::tags, node, specification);
         node = maybe(SpecParser::description, node, specification);
-        oneOrMore(SpecParser::scenario, node, specification);
+        node = maybe(SpecParser::contextSteps, node, specification);
+        node = oneOrMore(SpecParser::scenario, node, specification);
+        node = maybe(SpecParser::tearDownSteps, node, specification);
         return specification;
+    }
+
+    private static Node descriptionTearDown(Node node, Specification specification) {
+        specification.setDescriptionTearDown(((Text) node.getFirstChild()).getLiteral());
+        return node.getNext();
+    }
+
+    private static Node contextSteps(Node node, Specification specification) {
+        oneOrMore(SpecParser::contextStep, ((BulletList) node).getFirstChild(), specification);
+        return node.getNext();
+    }
+
+    private static Node contextStep(Node list, Specification specification) {
+        String stepText = ((Text) list.getFirstChild().getFirstChild()).getLiteral();
+        specification.addContextStep(new Step(stepText));
+        return list.getNext();
+    }
+
+    private static Node tearDownSteps(Node node, Specification specification) {
+        node = ((ThematicBreak) node).getNext();
+        node = maybe(SpecParser::descriptionTearDown, node, specification);
+        oneOrMore(SpecParser::tearDownStep, node.getFirstChild(), specification);
+        return node.getNext();
+    }
+
+    private static Node tearDownStep(Node node, Specification specification) {
+        String stepText = ((Text) node.getFirstChild().getFirstChild()).getLiteral();
+        specification.addTearDownStep(new Step(stepText));
+        return node.getNext();
     }
 
     private static Node scenario(Node node, Specification specification) {
@@ -104,8 +133,25 @@ public class SpecParser {
         headingMD(sb, specification);
         tagsMD(sb, specification);
         descriptionMD(sb, specification);
-        scenariosMD(sb,specification);
+        contextStepsMD(sb,specification);
+        scenariosMD(sb, specification);
+        tearDownStepsMD(sb, specification);
         return sb.toString();
+    }
+
+    private static void tearDownStepsMD(StringBuilder sb, Specification specification) {
+        appendStepList(sb,specification.getTearDownSteps());
+    }
+
+    private static void contextStepsMD(StringBuilder sb, Specification specification) {
+        appendStepList(sb,specification.getContextSteps());
+    }
+
+    private static void appendStepList(StringBuilder sb, List<Step> list) {
+        list.forEach(step -> {
+            sb.append("* ").append(step.getStepText()).append("\n");
+        });
+        sb.append("\n\n");
     }
 
     private static void scenariosMD(StringBuilder sb, Specification specification) {
@@ -122,8 +168,7 @@ public class SpecParser {
     }
 
     private static void stepsMD(StringBuilder sb, Scenario scenario) {
-        scenario.getSteps().forEach(step -> stepMD(sb, step));
-        sb.append("\n\n");
+        appendStepList(sb, scenario.getSteps());
     }
 
     private static void stepMD(StringBuilder sb, Step step) {
@@ -135,7 +180,7 @@ public class SpecParser {
     }
 
     private static void descriptionMD(StringBuilder sb, HasTagsAndDescription specification) {
-        if (specification.getDescription() == null){
+        if (specification.getDescription() == null) {
             return;
         }
         sb

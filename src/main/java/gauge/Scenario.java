@@ -49,7 +49,8 @@ public class Scenario implements HasTagsAndDescription {
     public boolean equals(Object obj) {
         Scenario scenario = (Scenario) obj;
         return scenario.heading.equals(heading) &&
-                scenario.description.equals( description) &&
-                steps.containsAll(scenario.getSteps());
+                scenario.description == null ? description == null : scenario.description.equals(description) &&
+                steps.containsAll(scenario.getSteps()) &&
+                steps.size()== scenario.steps.size();
     }
 }
