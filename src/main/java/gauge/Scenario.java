@@ -3,10 +3,10 @@ package gauge;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Scenario implements HasTagsAndDescription {
+public class Scenario implements HasTagsAndComment {
 
     private String heading;
-    private String description;
+    private String comment;
     private List<Tag> tags = new ArrayList<>();
     private List<Step> steps = new ArrayList<>();
 
@@ -21,8 +21,8 @@ public class Scenario implements HasTagsAndDescription {
     }
 
     @Override
-    public void setDescription(String description) {
-        this.description = description;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public void addStep(String stepText) {
@@ -33,8 +33,8 @@ public class Scenario implements HasTagsAndDescription {
         return heading;
     }
 
-    public String getDescription() {
-        return description;
+    public String getComment() {
+        return comment;
     }
 
     public List<Tag> getTags() {
@@ -49,7 +49,7 @@ public class Scenario implements HasTagsAndDescription {
     public boolean equals(Object obj) {
         Scenario scenario = (Scenario) obj;
         return scenario.heading.equals(heading) &&
-                scenario.description == null ? description == null : scenario.description.equals(description) &&
+                scenario.comment == null ? comment == null : scenario.comment.equals(comment) &&
                 steps.containsAll(scenario.getSteps()) &&
                 steps.size()== scenario.steps.size();
     }

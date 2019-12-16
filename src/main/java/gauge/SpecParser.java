@@ -20,15 +20,15 @@ public class SpecParser {
         Specification specification = new Specification();
         node = headingSpec(node.getFirstChild(), specification);
         node = maybe(SpecParser::tags, node, specification);
-        node = maybe(SpecParser::description, node, specification);
+        node = maybe(SpecParser::comment, node, specification);
         node = maybe(SpecParser::contextSteps, node, specification);
         node = oneOrMore(SpecParser::scenario, node, specification);
         node = maybe(SpecParser::tearDownSteps, node, specification);
         return specification;
     }
 
-    private static Node descriptionTearDown(Node node, Specification specification) {
-        specification.setDescriptionTearDown(((Text) node.getFirstChild()).getLiteral());
+    private static Node commentTearDown(Node node, Specification specification) {
+        specification.setCommentTearDown(((Text) node.getFirstChild()).getLiteral());
         return node.getNext();
     }
 
@@ -45,7 +45,7 @@ public class SpecParser {
 
     private static Node tearDownSteps(Node node, Specification specification) {
         node = ((ThematicBreak) node).getNext();
-        node = maybe(SpecParser::descriptionTearDown, node, specification);
+        node = maybe(SpecParser::commentTearDown, node, specification);
         oneOrMore(SpecParser::tearDownStep, node.getFirstChild(), specification);
         return node.getNext();
     }
@@ -60,7 +60,7 @@ public class SpecParser {
         Scenario scenario = new Scenario();
         node = headingScenario(node, scenario);
         node = maybe(SpecParser::tags, node, scenario);
-        node = maybe(SpecParser::description, node, scenario);
+        node = maybe(SpecParser::comment, node, scenario);
         node = steps(node, scenario);
         specification.addScenario(scenario);
         return node;
@@ -77,20 +77,20 @@ public class SpecParser {
         return node.getNext();
     }
 
-    private static Node description(Node node, HasTagsAndDescription hasTagsAndDescription) {
-        String description = ((Text) node.getFirstChild()).getLiteral();
-        hasTagsAndDescription.setDescription(description);
+    private static Node comment(Node node, HasTagsAndComment hasTagsAndComment) {
+        String comment = ((Text) node.getFirstChild()).getLiteral();
+        hasTagsAndComment.setComment(comment);
         return node.getNext();
     }
 
-    private static Node tags(Node node, HasTagsAndDescription hasTagsAndDescription) {
+    private static Node tags(Node node, HasTagsAndComment hasTagsAndComment) {
         String tags = ((Text) node.getFirstChild()).getLiteral();
         if (!tags.startsWith("Tags: ")) {
             return node;
         }
         Arrays.stream(tags.substring(6).split(","))
                 .map(String::trim)
-                .forEach(hasTagsAndDescription::addTag);
+                .forEach(hasTagsAndComment::addTag);
         return node.getNext();
     }
 
@@ -132,7 +132,7 @@ public class SpecParser {
         StringBuilder sb = new StringBuilder();
         headingMD(sb, specification);
         tagsMD(sb, specification);
-        descriptionMD(sb, specification);
+        commentMD(sb, specification);
         contextStepsMD(sb,specification);
         scenariosMD(sb, specification);
         tearDownStepsMD(sb, specification);
@@ -163,7 +163,7 @@ public class SpecParser {
     private static void scenarioMD(StringBuilder sb, Scenario scenario) {
         scenarioHeadingMD(sb, scenario);
         tagsMD(sb, scenario);
-        descriptionMD(sb, scenario);
+        commentMD(sb, scenario);
         stepsMD(sb, scenario);
     }
 
@@ -171,24 +171,20 @@ public class SpecParser {
         appendStepList(sb, scenario.getSteps());
     }
 
-    private static void stepMD(StringBuilder sb, Step step) {
-        sb.append("* ").append(step.getStepText()).append("\n");
-    }
-
     private static void scenarioHeadingMD(StringBuilder sb, Scenario scenario) {
         sb.append("## ").append(scenario.getHeading()).append("\n");
     }
 
-    private static void descriptionMD(StringBuilder sb, HasTagsAndDescription specification) {
-        if (specification.getDescription() == null) {
+    private static void commentMD(StringBuilder sb, HasTagsAndComment specification) {
+        if (specification.getComment() == null) {
             return;
         }
         sb
-                .append(specification.getDescription())
+                .append(specification.getComment())
                 .append("\n\n");
     }
 
-    private static void tagsMD(StringBuilder sb, HasTagsAndDescription specification) {
+    private static void tagsMD(StringBuilder sb, HasTagsAndComment specification) {
         List<Tag> tags = specification.getTags();
         if (tags.isEmpty()) {
             return;

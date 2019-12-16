@@ -9,10 +9,11 @@ It supports:
 * Scenarios
 * Steps
 * Tags
-* Descriptions/Comments
+* Context Steps
+* Tear Down Steps
+* Comments after Tags / before Tear Down Steps
 
 It doesn't support yet:
 
 * Tables
 * Parameters
-* Tear Down Steps

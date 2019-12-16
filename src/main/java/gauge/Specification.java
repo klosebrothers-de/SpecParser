@@ -3,10 +3,10 @@ package gauge;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Specification implements HasTagsAndDescription {
+public class Specification implements HasTagsAndComment {
     private String heading;
-    private String description;
-    private String descriptionTearDown;
+    private String comment;
+    private String commentTearDown;
     private List<Tag> tags = new ArrayList<>();
     private List<Scenario> scenarios = new ArrayList<>();
     private List<Step> tearDownSteps = new ArrayList<>();
@@ -21,8 +21,8 @@ public class Specification implements HasTagsAndDescription {
         tags.add(new Tag(s));
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public void addScenario(Scenario scenario) {
@@ -33,8 +33,8 @@ public class Specification implements HasTagsAndDescription {
         return heading;
     }
 
-    public String getDescription() {
-        return description;
+    public String getComment() {
+        return comment;
     }
 
     public List<Tag> getTags() {
@@ -57,8 +57,8 @@ public class Specification implements HasTagsAndDescription {
     public boolean equals(Object obj) {
         Specification specification = (Specification) obj;
         return specification.getHeading().equals(heading) &&
-                specification.getDescription() == null ? description == null : specification.description.equals(description) &&
-                specification.getDescriptionTearDown() == null ? descriptionTearDown == null : specification.descriptionTearDown.equals(descriptionTearDown) &&
+                specification.getComment() == null ? comment == null : specification.comment.equals(comment) &&
+                specification.getCommentTearDown() == null ? commentTearDown == null : specification.commentTearDown.equals(commentTearDown) &&
                 scenarios.containsAll(specification.getScenarios()) &&
                 scenarios.size()  == specification.scenarios.size();
     }
@@ -67,12 +67,12 @@ public class Specification implements HasTagsAndDescription {
         contextSteps.add(step);
     }
 
-    public void setDescriptionTearDown(String literal) {
-        descriptionTearDown = literal;
+    public void setCommentTearDown(String literal) {
+        commentTearDown = literal;
     }
 
-    public String getDescriptionTearDown() {
-        return descriptionTearDown;
+    public String getCommentTearDown() {
+        return commentTearDown;
     }
 
     public void addTearDownStep(Step step) {

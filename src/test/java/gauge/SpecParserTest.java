@@ -15,10 +15,10 @@ class SpecParserTest {
     //Positive Tests
 
     @Test
-    void gaugeShouldHaveThisDescription() {
+    void gaugeShouldHaveThisComment() {
         Specification specification = SpecParser.parse(gauge);
         assertEquals("The admin user must be able to search for available products on the search page",
-                specification.getDescription());
+                specification.getComment());
     }
 
     @Test
