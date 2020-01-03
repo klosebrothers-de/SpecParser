@@ -1,6 +1,6 @@
 ## Gauge Specification Parser
 
-This project Parses an Gauge Specification into a appropriate data structure.
+This project Parses a Gauge specification into an appropriate data structure.
 This structure can then be modified and rendered back to a .spec file.
 
 It supports:
