@@ -2,6 +2,7 @@ package de.klosebrothers.specparser.gauge;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.*;
 
 public class Scenario implements HasTagsAndComment {
 
@@ -43,6 +44,10 @@ public class Scenario implements HasTagsAndComment {
 
     public List<Step> getSteps() {
         return steps;
+    }
+
+    public String getStepsAsStringJoinedBy(String joining) {
+        return steps.stream().map(Step::getStepText).collect(Collectors.joining(joining));
     }
 
     @Override
