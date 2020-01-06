@@ -1,4 +1,4 @@
-package gauge;
+package de.klosebrothers.specparser.gauge;
 
 import org.commonmark.node.*;
 import org.commonmark.parser.Parser;

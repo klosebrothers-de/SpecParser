@@ -1,4 +1,4 @@
-package gauge;
+package de.klosebrothers.specparser.gauge;
 
 import java.util.ArrayList;
 import java.util.List;

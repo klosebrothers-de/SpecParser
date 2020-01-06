@@ -1,4 +1,4 @@
-package gauge;
+package de.klosebrothers.specparser.gauge;
 
 public class Step {
     private String stepText;
