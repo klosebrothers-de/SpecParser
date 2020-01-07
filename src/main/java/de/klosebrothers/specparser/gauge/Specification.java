@@ -2,6 +2,7 @@ package de.klosebrothers.specparser.gauge;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Specification implements HasTagsAndComment {
     private String heading;
@@ -64,6 +65,11 @@ public class Specification implements HasTagsAndComment {
                 specification.getCommentTearDown() == null ? commentTearDown == null : specification.commentTearDown.equals(commentTearDown) &&
                 scenarios.containsAll(specification.getScenarios()) &&
                 scenarios.size()  == specification.scenarios.size();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(heading, comment, commentTearDown, tags, scenarios, tearDownSteps, contextSteps);
     }
 
     public void addContextStep(Step step) {

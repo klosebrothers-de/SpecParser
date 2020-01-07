@@ -117,7 +117,7 @@ public class SpecParser {
         node = f.apply(node, a);
         try {
             //noinspection InfiniteLoopStatement
-            while (true) {
+            for(;;){
                 node = f.apply(node, a);
             }
         } catch (Exception e) {
