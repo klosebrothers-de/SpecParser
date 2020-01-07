@@ -55,6 +55,9 @@ public class Specification implements HasTagsAndComment {
 
     @Override
     public boolean equals(Object obj) {
+        if (!(obj instanceof Specification)) {
+            return false;
+        }
         Specification specification = (Specification) obj;
         return specification.getHeading().equals(heading) &&
                 specification.getComment() == null ? comment == null : specification.comment.equals(comment) &&
