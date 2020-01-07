@@ -6,10 +6,11 @@ import org.junit.jupiter.api.Test;
 import static de.klosebrothers.specparser.gauge.SpecParser.toSpecification;
 import static de.klosebrothers.specparser.gauge.TestEnvironment.*;
 
-class SpecificationTest {
+
+public class SpecificationTest {
 
     @Test
-    void mdFormattedGauge() {
+    public void testMdFormattedGauge() {
         Specification specification = toSpecification(gauge);
         String mdFormatted = SpecBuilder.fromSpecification(specification);
         Specification expected = toSpecification(mdFormatted);
@@ -17,7 +18,7 @@ class SpecificationTest {
     }
 
     @Test
-    void mdFormattedSmallGauge() {
+    public void testMdFormattedSmallGauge() {
         Specification specification = toSpecification(gaugeSmall);
         String mdFormatted = SpecBuilder.fromSpecification(specification);
         Specification expected = toSpecification(mdFormatted);
@@ -25,7 +26,7 @@ class SpecificationTest {
     }
 
     @Test
-    void mdFormattedGaugeWithTearDownAndContextSteps() {
+    public void testMdFormattedGaugeWithTearDownAndContextSteps() {
         Specification specification = toSpecification(gaugeWithTearDown);
         String mdFormatted = SpecBuilder.fromSpecification(specification);
         Specification expected = toSpecification(mdFormatted);
