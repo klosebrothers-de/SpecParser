@@ -21,7 +21,7 @@ public class SpecParser {
         node = maybe(SpecParser::comment, node, specification);
         node = maybe(SpecParser::contextSteps, node, specification);
         node = oneOrMore(SpecParser::scenario, node, specification);
-        node = maybe(SpecParser::tearDownSteps, node, specification);
+        maybe(SpecParser::tearDownSteps, node, specification);
         return specification;
     }
 
@@ -31,7 +31,7 @@ public class SpecParser {
     }
 
     private static Node contextSteps(Node node, Specification specification) {
-        oneOrMore(SpecParser::contextStep, ((BulletList) node).getFirstChild(), specification);
+        oneOrMore(SpecParser::contextStep, node.getFirstChild(), specification);
         return node.getNext();
     }
 
@@ -42,7 +42,7 @@ public class SpecParser {
     }
 
     private static Node tearDownSteps(Node node, Specification specification) {
-        node = ((ThematicBreak) node).getNext();
+        node = node.getNext();
         node = maybe(SpecParser::commentTearDown, node, specification);
         oneOrMore(SpecParser::tearDownStep, node.getFirstChild(), specification);
         return node.getNext();

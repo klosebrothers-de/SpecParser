@@ -5,31 +5,31 @@ import org.junit.jupiter.api.Test;
 
 import static de.klosebrothers.specparser.gauge.SpecParser.toSpecification;
 import static de.klosebrothers.specparser.gauge.TestEnvironment.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class SpecificationTest {
 
+    // TODO: 14.01.20 testPräfix RAUS
     @Test
     public void testMdFormattedGauge() {
-        Specification specification = toSpecification(gauge);
-        String mdFormatted = SpecBuilder.fromSpecification(specification);
-        Specification expected = toSpecification(mdFormatted);
-        Assertions.assertEquals(expected, specification);
+        verifyFromGaugeToSpecAndBack(gauge);
     }
 
     @Test
     public void testMdFormattedSmallGauge() {
-        Specification specification = toSpecification(gaugeSmall);
-        String mdFormatted = SpecBuilder.fromSpecification(specification);
-        Specification expected = toSpecification(mdFormatted);
-        Assertions.assertEquals(expected, specification);
+        verifyFromGaugeToSpecAndBack(gaugeSmall);
     }
 
     @Test
     public void testMdFormattedGaugeWithTearDownAndContextSteps() {
-        Specification specification = toSpecification(gaugeWithTearDown);
+        verifyFromGaugeToSpecAndBack(gaugeWithTearDown);
+    }
+
+    private void verifyFromGaugeToSpecAndBack(String gauge) {
+        Specification specification = toSpecification(gauge);
         String mdFormatted = SpecBuilder.fromSpecification(specification);
-        Specification expected = toSpecification(mdFormatted);
-        Assertions.assertEquals(expected, specification);
+        assertEquals(toSpecification(mdFormatted), specification);
+        //assertJ
     }
 }

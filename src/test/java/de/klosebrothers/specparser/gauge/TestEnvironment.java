@@ -68,6 +68,6 @@ public class TestEnvironment {
                 .filter(line -> Arrays.stream(what)
                         .noneMatch(line::contains))
                 .reduce((t, op) -> t.concat(op + "\n"))
-                .get();
+                .orElse("");
     }
 }

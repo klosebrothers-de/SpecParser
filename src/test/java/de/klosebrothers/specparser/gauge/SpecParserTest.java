@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static de.klosebrothers.specparser.gauge.SpecParser.*;
+import static java.util.Arrays.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static de.klosebrothers.specparser.gauge.TestEnvironment.*;
 
@@ -24,7 +25,7 @@ public class SpecParserTest {
     @Test
     public void testSmallGaugeShouldHaveTagsSearchAdmin() {
         Specification specification = toSpecification(gaugeSmall);
-        Assertions.assertArrayEquals(Arrays.asList(new Tag("search"), new Tag("admin")).toArray(),
+        assertArrayEquals(asList(new Tag("search"), new Tag("admin")).toArray(),
                 specification.getTags().toArray());
     }
 
@@ -38,7 +39,7 @@ public class SpecParserTest {
     @Test
     public void testGaugeHasOneScenarioWith4Steps() {
         Specification specification = toSpecification(gauge);
-        Assertions.assertArrayEquals(new Step[]{
+        assertArrayEquals(new Step[]{
                         new Step("User must be logged in as \"admin\""),
                         new Step("Open the product search page"),
                         new Step("Search for product \"Cup Cakes\""),
@@ -49,7 +50,7 @@ public class SpecParserTest {
     @Test
     public void testSmallGaugeHasOneScenarioWith2Steps() {
         Specification specification = toSpecification(gaugeSmall);
-        Assertions.assertArrayEquals(new Step[]{
+        assertArrayEquals(new Step[]{
                         new Step("User must be logged in as \"admin\""),
                         new Step("\"Cup Cakes\" should show up in the search results"),},
                 specification.getScenarios().get(0).getSteps().toArray());

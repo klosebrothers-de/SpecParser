@@ -1,3 +1,4 @@
+[![Maven Central](https://img.shields.io/maven-central/v/de.klosebrothers/specparser.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22de.klosebrothers%22%20AND%20a:%22specparser%22)
 ## Gauge Specification Parser
 
 This project Parses a Gauge specification into an appropriate data structure.
