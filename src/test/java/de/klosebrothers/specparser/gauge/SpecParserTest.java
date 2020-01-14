@@ -6,89 +6,94 @@ import java.util.List;
 
 import static de.klosebrothers.specparser.gauge.SpecParser.toSpecification;
 import static de.klosebrothers.specparser.gauge.TestEnvironment.*;
-import static java.util.Arrays.asList;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
-public class SpecParserTest {
+class SpecParserTest {
 
     //Positive Tests
 
     @Test
-    public void gaugeShouldHaveThisComment() {
+    void gaugeShouldHaveThisComment() {
         Specification specification = toSpecification(gauge);
-        assertEquals("The admin user must be able to search for available products on the search page",
-                specification.getComment());
+        assertThat(specification.getComment())
+                .isEqualTo("The admin user must be able to search for available products on the search page");
     }
 
     @Test
-    public void smallGaugeShouldHaveTagsSearchAdmin() {
+    void smallGaugeShouldHaveTagsSearchAdmin() {
         Specification specification = toSpecification(gaugeSmall);
-        assertArrayEquals(asList(new Tag("search"), new Tag("admin")).toArray(),
-                specification.getTags().toArray());
+        assertThat(specification.getTags())
+                .containsExactly(
+                        new Tag("search"),
+                        new Tag("admin"));
     }
 
     @Test
-    public void smallGaugeHasOneScenarioNamedSuccessfulSearch() {
+    void smallGaugeHasOneScenarioNamedSuccessfulSearch() {
         Specification specification = toSpecification(gaugeSmall);
-        assertEquals("Successful search",
-                specification.getScenarios().get(0).getHeading());
+        assertThat(specification.getScenarios().get(0).getHeading())
+                .isEqualTo("Successful search");
     }
 
     @Test
-    public void gaugeHasOneScenarioWith4Steps() {
+    void gaugeHasOneScenarioWith4Steps() {
         Specification specification = toSpecification(gauge);
-        assertArrayEquals(new Step[]{
+        assertThat(specification.getScenarios().get(0).getSteps())
+                .containsExactly(
                         new Step("User must be logged in as \"admin\""),
                         new Step("Open the product search page"),
                         new Step("Search for product \"Cup Cakes\""),
-                        new Step("\"Cup Cakes\" should show up in the search results"),},
-                specification.getScenarios().get(0).getSteps().toArray());
+                        new Step("\"Cup Cakes\" should show up in the search results"));
     }
 
     @Test
-    public void smallGaugeHasOneScenarioWith2Steps() {
+    void smallGaugeHasOneScenarioWith2Steps() {
         Specification specification = toSpecification(gaugeSmall);
-        assertArrayEquals(new Step[]{
+        assertThat(specification.getScenarios().get(0).getSteps())
+                .containsExactly(
                         new Step("User must be logged in as \"admin\""),
-                        new Step("\"Cup Cakes\" should show up in the search results"),},
-                specification.getScenarios().get(0).getSteps().toArray());
+                        new Step("\"Cup Cakes\" should show up in the search results"));
     }
 
     @Test
-    public void gaugeHas2Scenarios() {
+    void gaugeHas2Scenarios() {
         Specification specification = toSpecification(gauge);
-        assertEquals(2,
-                specification.getScenarios().size());
+        assertThat(specification.getScenarios().size())
+                .isEqualTo(2);
     }
 
     @Test
-    public void shouldParseGaugeWithTearDownAndContextSteps() {
+    void shouldParseGaugeWithTearDownAndContextSteps() {
         Specification specification = toSpecification(gaugeWithTearDown);
         List<Step> tearDownSteps = specification.getTearDownSteps();
         List<Step> contextSteps = specification.getContextSteps();
 
-        assertEquals(2, contextSteps.size());
-        assertEquals("Sign up for user \"mike\"", contextSteps.get(0).getStepText());
-        assertEquals("Log in as \"mike\"", contextSteps.get(1).getStepText());
+        assertThat(contextSteps
+        ).containsExactly(
+                new Step("Sign up for user \"mike\""),
+                new Step("Log in as \"mike\""));
 
-        assertEquals(2, tearDownSteps.size());
-        assertEquals("Logout user \"mike\"", tearDownSteps.get(0).getStepText());
-        assertEquals("Delete user \"mike\"", tearDownSteps.get(1).getStepText());
+        assertThat(tearDownSteps)
+                .containsExactly(
+                        new Step("Logout user \"mike\""),
+                        new Step("Delete user \"mike\""));
+
     }
 
     // TODO: 13.12.19 Replace Excetions w/ GaugeExeptions
     //Negative Tests
     @Test
-    public void gaugeWithoutHeading() {
+    void gaugeWithoutHeading() {
         String search_specification = deleteLineWith(gauge, "Search specification");
-        assertThrows(ClassCastException.class, () -> toSpecification(search_specification));
+        assertThatExceptionOfType(ClassCastException.class)
+                .isThrownBy(() -> toSpecification(search_specification));
     }
 
     @Test
-    public void smallGaugeWithoutSteps() {
+    void smallGaugeWithoutSteps() {
         String gaugeWithoutSteps = deleteLineWith(gaugeSmall, "User must be logged in as", "\"Cup Cakes\" should show up in the");
-        assertThrows(NullPointerException.class, () -> toSpecification(gaugeWithoutSteps));
+        assertThatNullPointerException()
+                .isThrownBy(() -> toSpecification(gaugeWithoutSteps));
     }
-
 
 }

@@ -4,30 +4,29 @@ import org.junit.jupiter.api.Test;
 
 import static de.klosebrothers.specparser.gauge.SpecParser.toSpecification;
 import static de.klosebrothers.specparser.gauge.TestEnvironment.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
-
-public class SpecificationTest {
+class SpecificationTest {
 
     @Test
-    public void mdFormattedGauge() {
+    void mdFormattedGauge() {
         verifyFromGaugeToSpecAndBack(gauge);
     }
 
     @Test
-    public void mdFormattedSmallGauge() {
+    void mdFormattedSmallGauge() {
         verifyFromGaugeToSpecAndBack(gaugeSmall);
     }
 
     @Test
-    public void mdFormattedGaugeWithTearDownAndContextSteps() {
+    void mdFormattedGaugeWithTearDownAndContextSteps() {
         verifyFromGaugeToSpecAndBack(gaugeWithTearDown);
     }
 
     private void verifyFromGaugeToSpecAndBack(String gauge) {
         Specification specification = toSpecification(gauge);
         String mdFormatted = SpecBuilder.fromSpecification(specification);
-        assertEquals(toSpecification(mdFormatted), specification);
+        assertThat(toSpecification(mdFormatted)).isEqualTo(specification);
         //assertJ
     }
 }
