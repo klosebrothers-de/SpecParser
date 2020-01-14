@@ -1,28 +1,26 @@
 package de.klosebrothers.specparser.gauge;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static de.klosebrothers.specparser.gauge.SpecParser.toSpecification;
 import static de.klosebrothers.specparser.gauge.TestEnvironment.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class SpecificationTest {
 
-    // TODO: 14.01.20 testPräfix RAUS
     @Test
-    public void testMdFormattedGauge() {
+    public void mdFormattedGauge() {
         verifyFromGaugeToSpecAndBack(gauge);
     }
 
     @Test
-    public void testMdFormattedSmallGauge() {
+    public void mdFormattedSmallGauge() {
         verifyFromGaugeToSpecAndBack(gaugeSmall);
     }
 
     @Test
-    public void testMdFormattedGaugeWithTearDownAndContextSteps() {
+    public void mdFormattedGaugeWithTearDownAndContextSteps() {
         verifyFromGaugeToSpecAndBack(gaugeWithTearDown);
     }
 

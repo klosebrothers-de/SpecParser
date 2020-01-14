@@ -1,43 +1,41 @@
 package de.klosebrothers.specparser.gauge;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
-import static de.klosebrothers.specparser.gauge.SpecParser.*;
-import static java.util.Arrays.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static de.klosebrothers.specparser.gauge.SpecParser.toSpecification;
 import static de.klosebrothers.specparser.gauge.TestEnvironment.*;
+import static java.util.Arrays.asList;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SpecParserTest {
 
     //Positive Tests
 
     @Test
-    public void testGaugeShouldHaveThisComment() {
+    public void gaugeShouldHaveThisComment() {
         Specification specification = toSpecification(gauge);
         assertEquals("The admin user must be able to search for available products on the search page",
                 specification.getComment());
     }
 
     @Test
-    public void testSmallGaugeShouldHaveTagsSearchAdmin() {
+    public void smallGaugeShouldHaveTagsSearchAdmin() {
         Specification specification = toSpecification(gaugeSmall);
         assertArrayEquals(asList(new Tag("search"), new Tag("admin")).toArray(),
                 specification.getTags().toArray());
     }
 
     @Test
-    public void testSmallGaugeHasOneScenarioNamedSuccessfulSearch() {
+    public void smallGaugeHasOneScenarioNamedSuccessfulSearch() {
         Specification specification = toSpecification(gaugeSmall);
         assertEquals("Successful search",
                 specification.getScenarios().get(0).getHeading());
     }
 
     @Test
-    public void testGaugeHasOneScenarioWith4Steps() {
+    public void gaugeHasOneScenarioWith4Steps() {
         Specification specification = toSpecification(gauge);
         assertArrayEquals(new Step[]{
                         new Step("User must be logged in as \"admin\""),
@@ -48,7 +46,7 @@ public class SpecParserTest {
     }
 
     @Test
-    public void testSmallGaugeHasOneScenarioWith2Steps() {
+    public void smallGaugeHasOneScenarioWith2Steps() {
         Specification specification = toSpecification(gaugeSmall);
         assertArrayEquals(new Step[]{
                         new Step("User must be logged in as \"admin\""),
@@ -57,14 +55,14 @@ public class SpecParserTest {
     }
 
     @Test
-    public void testGaugeHas2Scenarios() {
+    public void gaugeHas2Scenarios() {
         Specification specification = toSpecification(gauge);
         assertEquals(2,
                 specification.getScenarios().size());
     }
 
     @Test
-    public void testShouldParseGaugeWithTearDownAndContextSteps() {
+    public void shouldParseGaugeWithTearDownAndContextSteps() {
         Specification specification = toSpecification(gaugeWithTearDown);
         List<Step> tearDownSteps = specification.getTearDownSteps();
         List<Step> contextSteps = specification.getContextSteps();
@@ -81,13 +79,13 @@ public class SpecParserTest {
     // TODO: 13.12.19 Replace Excetions w/ GaugeExeptions
     //Negative Tests
     @Test
-    public void testGaugeWithoutHeading() {
+    public void gaugeWithoutHeading() {
         String search_specification = deleteLineWith(gauge, "Search specification");
         assertThrows(ClassCastException.class, () -> toSpecification(search_specification));
     }
 
     @Test
-    public void testSmallGaugeWithoutSteps() {
+    public void smallGaugeWithoutSteps() {
         String gaugeWithoutSteps = deleteLineWith(gaugeSmall, "User must be logged in as", "\"Cup Cakes\" should show up in the");
         assertThrows(NullPointerException.class, () -> toSpecification(gaugeWithoutSteps));
     }

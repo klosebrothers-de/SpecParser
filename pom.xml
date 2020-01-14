@@ -6,7 +6,7 @@
 
     <groupId>de.klosebrothers</groupId>
     <artifactId>specparser</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
 
     <name>Gauge Specification Parser</name>
     <description>This is a Library for parsing a Gauge Specification into a appropriate datastructure</description>
@@ -59,7 +59,7 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <version>5.5.2</version>
             <scope>test</scope>
         </dependency>
@@ -67,6 +67,11 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M4</version>
+            </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
