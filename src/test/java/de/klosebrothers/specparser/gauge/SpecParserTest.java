@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static de.klosebrothers.specparser.gauge.SpecParser.toSpecification;
+import static de.klosebrothers.specparser.gauge.SpecBuilder.toSpecification;
 import static de.klosebrothers.specparser.gauge.TestEnvironment.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -15,14 +15,24 @@ class SpecParserTest {
     @Test
     void gaugeShouldHaveThisComment() {
         Specification specification = toSpecification(gauge);
-        assertThat(specification.getComment())
-                .isEqualTo("The admin user must be able to search for available products on the search page");
+        assertThat(specification.getComments())
+                .containsExactly(
+                        new Comment("The admin user must be able to search for available products on the search page"));
+    }
+
+    @Test
+    void gaugeShouldParseWithCommentFirst() {
+        String comment = "This is a Comment plz parse mee :) \n";
+        Specification specification = toSpecification(comment + gauge);
+        assertThat(specification.getComments())
+                .containsExactly(
+                    new Comment("The admin user must be able to search for available products on the search page"));
     }
 
     @Test
     void smallGaugeShouldHaveTagsSearchAdmin() {
         Specification specification = toSpecification(gaugeSmall);
-        assertThat(specification.getTags())
+        assertThat(specification.getTags().getTags())
                 .containsExactly(
                         new Tag("search"),
                         new Tag("admin"));
