@@ -1,4 +1,4 @@
-package de.klosebrothers.specparser.gauge;
+package de.klosebrothers.specparser.gauge.datastructure;
 
 public class Step extends Component {
     private String step;

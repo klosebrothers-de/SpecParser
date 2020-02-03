@@ -1,5 +1,6 @@
 package de.klosebrothers.specparser.gauge;
 
+import de.klosebrothers.specparser.gauge.datastructure.Specification;
 import org.junit.jupiter.api.Test;
 
 import static de.klosebrothers.specparser.gauge.SpecBuilder.*;

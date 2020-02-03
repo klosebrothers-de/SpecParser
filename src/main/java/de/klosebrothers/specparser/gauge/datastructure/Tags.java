@@ -1,4 +1,4 @@
-package de.klosebrothers.specparser.gauge;
+package de.klosebrothers.specparser.gauge.datastructure;
 
 import java.util.ArrayList;
 import java.util.List;

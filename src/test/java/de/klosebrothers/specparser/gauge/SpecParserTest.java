@@ -1,5 +1,9 @@
 package de.klosebrothers.specparser.gauge;
 
+import de.klosebrothers.specparser.gauge.datastructure.Comment;
+import de.klosebrothers.specparser.gauge.datastructure.Specification;
+import de.klosebrothers.specparser.gauge.datastructure.Step;
+import de.klosebrothers.specparser.gauge.datastructure.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

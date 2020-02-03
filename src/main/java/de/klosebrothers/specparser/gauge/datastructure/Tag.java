@@ -1,4 +1,4 @@
-package de.klosebrothers.specparser.gauge;
+package de.klosebrothers.specparser.gauge.datastructure;
 
 public class Tag {
     private String tag;
