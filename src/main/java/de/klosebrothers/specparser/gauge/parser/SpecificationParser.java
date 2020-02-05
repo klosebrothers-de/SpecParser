@@ -3,6 +3,8 @@ package de.klosebrothers.specparser.gauge.parser;
 import de.klosebrothers.specparser.gauge.datastructure.Specification;
 import org.commonmark.node.Node;
 
+import static java.util.Collections.singletonList;
+
 public class SpecificationParser extends GaugeParser {
 
     @Override
@@ -19,6 +21,6 @@ public class SpecificationParser extends GaugeParser {
         fromTo = scenarioParser.parseAdd(fromTo.from, specification);
         fromTo = many(fromTo.from, specification, new OneOf(commentParser, scenarioParser));
         fromTo = maybe(fromTo.from, specification, teardownStepsParser);
-        return new FromTo(fromTo.from, specification);
+        return new FromTo(fromTo.from, singletonList(specification));
     }
 }

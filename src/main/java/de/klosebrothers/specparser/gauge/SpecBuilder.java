@@ -13,6 +13,6 @@ public class SpecBuilder {
 
     public static Specification toSpecification(String gauge) {
         Node rootNode = Parser.builder().build().parse(gauge);
-        return (Specification) GaugeParser.specificationParser.parse(rootNode).to;
+        return (Specification) GaugeParser.specificationParser.parse(rootNode).to.get(0);
     }
 }

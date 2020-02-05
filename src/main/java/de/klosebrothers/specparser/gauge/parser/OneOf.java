@@ -16,10 +16,10 @@ public class OneOf extends GaugeParser{
                 return parser.parse(node);
             } catch (GaugeParserException e){
                 throw e;
-            } catch (Exception e){
+            } catch (WrongGaugeParserException e){
                 continue;
             }
         }
-        throw new GaugeParserException(node, "Maybe Error");
+        throw new RuntimeException("This shouldn't happen, please contact author with failing Gauge Specification File");
     }
 }

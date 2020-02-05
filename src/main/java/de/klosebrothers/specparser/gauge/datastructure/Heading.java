@@ -6,4 +6,8 @@ public class Heading extends Component {
     public Heading(String heading) {
         this.heading = heading;
     }
+
+    public String getHeading() {
+        return heading;
+    }
 }

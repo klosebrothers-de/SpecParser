@@ -1,4 +1,4 @@
 package de.klosebrothers.specparser.gauge.datastructure;
 
-public class ContextSteps {
+public class ContextSteps  extends Component{
 }

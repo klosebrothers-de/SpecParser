@@ -4,6 +4,8 @@ import de.klosebrothers.specparser.gauge.datastructure.Comment;
 import de.klosebrothers.specparser.gauge.datastructure.Specification;
 import de.klosebrothers.specparser.gauge.datastructure.Step;
 import de.klosebrothers.specparser.gauge.datastructure.Tag;
+import de.klosebrothers.specparser.gauge.parser.GaugeParserException;
+import de.klosebrothers.specparser.gauge.parser.WrongGaugeParserException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -26,17 +28,19 @@ class SpecParserTest {
 
     @Test
     void gaugeShouldParseWithCommentFirst() {
-        String comment = "This is a Comment plz parse mee :) \n";
+        String comment = "This is a Comment plz parse mee :)\n";
         Specification specification = toSpecification(comment + gauge);
         assertThat(specification.getComments())
                 .containsExactly(
-                    new Comment("The admin user must be able to search for available products on the search page"));
+                        new Comment("This is a Comment plz parse mee :)"),
+                        new Comment("The admin user must be able to search for available products on the search page"));
     }
 
     @Test
     void smallGaugeShouldHaveTagsSearchAdmin() {
         Specification specification = toSpecification(gaugeSmall);
-        assertThat(specification.getTags().getTags())
+        List<Tag> tags = specification.getTags();
+        assertThat(tags)
                 .containsExactly(
                         new Tag("search"),
                         new Tag("admin"));
@@ -82,10 +86,10 @@ class SpecParserTest {
         List<Step> tearDownSteps = specification.getTearDownSteps();
         List<Step> contextSteps = specification.getContextSteps();
 
-        assertThat(contextSteps
-        ).containsExactly(
-                new Step("Sign up for user \"mike\""),
-                new Step("Log in as \"mike\""));
+        assertThat(contextSteps)
+                .containsExactly(
+                        new Step("Sign up for user \"mike\""),
+                        new Step("Log in as \"mike\""));
 
         assertThat(tearDownSteps)
                 .containsExactly(
@@ -94,20 +98,21 @@ class SpecParserTest {
 
     }
 
-    // TODO: 13.12.19 Replace Excetions w/ GaugeExeptions
+    // TODO: 13.12.19 Replace Exceptions w/ GaugeExceptions
     //Negative Tests
     @Test
     void gaugeWithoutHeading() {
         String search_specification = deleteLineWith(gauge, "Search specification");
-        assertThatExceptionOfType(ClassCastException.class)
+        assertThatExceptionOfType(WrongGaugeParserException.class)
                 .isThrownBy(() -> toSpecification(search_specification));
     }
 
     @Test
     void smallGaugeWithoutSteps() {
         String gaugeWithoutSteps = deleteLineWith(gaugeSmall, "User must be logged in as", "\"Cup Cakes\" should show up in the");
-        assertThatNullPointerException()
-                .isThrownBy(() -> toSpecification(gaugeWithoutSteps));
+        assertThatExceptionOfType(GaugeParserException.class)
+                .isThrownBy(() -> toSpecification(gaugeWithoutSteps))
+        .withMessage("Tried to parse null with parser \"StepsParser\" but failed with error message: \"Can't parse nullpointer, reached end of file?\"");
     }
 
 }

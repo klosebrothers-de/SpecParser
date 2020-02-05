@@ -12,7 +12,7 @@ public class ScenarioParser extends GaugeParser {
         fromTo = many(fromTo.from, scenario, commentParser);
         fromTo = maybe(fromTo.from, scenario, tagsParser);
         fromTo = many(fromTo.from, scenario, commentParser);
-        fromTo = many(fromTo.from, scenario, stepsParser);
+        fromTo = stepsParser.parseAdd(fromTo.from, scenario);
         fromTo = many(fromTo.from, scenario, commentParser);
         return fromTo;
     }

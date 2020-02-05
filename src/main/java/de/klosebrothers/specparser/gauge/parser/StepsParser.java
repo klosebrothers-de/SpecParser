@@ -3,11 +3,18 @@ package de.klosebrothers.specparser.gauge.parser;
 import de.klosebrothers.specparser.gauge.datastructure.Steps;
 import org.commonmark.node.Node;
 
+import java.util.Collections;
+
+import static java.util.Collections.singletonList;
+
 public class StepsParser extends GaugeParser {
     @Override
     protected FromTo parse(Node node) {
+        if (node == null) {
+            throw new GaugeParserException(this, null, "Can't parse nullpointer, reached end of file?");
+        }
         Steps steps = new Steps();
         many(node, steps, new OneOf(stepParser, commentParser));
-        return new FromTo(node.getNext(), steps);
+        return new FromTo(node.getNext(), singletonList(steps));
     }
 }

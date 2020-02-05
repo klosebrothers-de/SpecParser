@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class Component {
     protected List<Component> branches = new ArrayList<>();
-    public void addComponent(Component component){
-        branches.add(component);
+    public void addAllComponents(List<Component> component){
+        branches.addAll(component);
     }
 }

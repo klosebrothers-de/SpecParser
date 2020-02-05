@@ -1,20 +1,21 @@
 package de.klosebrothers.specparser.gauge.parser;
 
 import de.klosebrothers.specparser.gauge.datastructure.Component;
-import de.klosebrothers.specparser.gauge.datastructure.Specification;
 import org.commonmark.node.Node;
+
+import static java.util.Collections.singletonList;
 
 public abstract class GaugeParser {
     protected abstract FromTo parse(Node node);
 
     public FromTo parseAdd(Node node, Component parent) {
         FromTo parse = parse(node);
-        parent.addComponent(parse.to);
+        parent.addAllComponents(parse.to);
         return parse;
     }
 
     public static FromTo maybe(Node node, Component parent, GaugeParser parser) {
-        FromTo fromTo = new FromTo(node, parent);
+        FromTo fromTo = new FromTo(node, singletonList(parent));
         try {
             return parser.parseAdd(node, parent);
         } catch (Exception e) {
@@ -23,28 +24,13 @@ public abstract class GaugeParser {
         return fromTo;
     }
 
-    public static FromTo oneOf(Node node, Component parent, GaugeParser... parsers) {
-        for (GaugeParser parser : parsers) {
-            try {
-                FromTo parse = parser.parse(node);
-                parent.addComponent(parse.to);
-                return parse;
-            } catch (GaugeParserException e) {
-                throw e;
-            } catch (Exception e) {
-                continue;
-            }
-        }
-        throw new GaugeParserException(node, "Maybe Error");
-    }
-
     public static FromTo many(Node node, Component parent, GaugeParser parser) {
-        FromTo parse = new FromTo(node, parent);
+        FromTo parse = new FromTo(node, singletonList(parent));
         try {
             while (true) {
                 parse = parser.parse(node);
                 node = parse.from;
-                parent.addComponent(parse.to);
+                parent.addAllComponents(parse.to);
             }
         } catch (Exception e) {
         }
@@ -61,6 +47,11 @@ public abstract class GaugeParser {
         FromTo many = many(node, parent, parser1);
         parser2.parse(node);
         return many;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 
     public static final SpecificationParser specificationParser = new SpecificationParser();
