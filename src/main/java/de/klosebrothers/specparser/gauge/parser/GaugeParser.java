@@ -55,6 +55,7 @@ public abstract class GaugeParser {
 
     public static final SpecificationParser specificationParser = new SpecificationParser();
     public static final SpecificationHeadingParser specificationHeadingParser = new SpecificationHeadingParser();
+    public static final ScenarioHeadingParser scenarioHeadingParser = new ScenarioHeadingParser();
     public static final CommentParser commentParser = new CommentParser();
     public static final TagsParser tagsParser = new TagsParser();
     public static final ScenarioParser scenarioParser = new ScenarioParser();
