@@ -3,7 +3,8 @@ package de.klosebrothers.specparser.gauge;
 import de.klosebrothers.specparser.gauge.datastructure.Specification;
 import org.junit.jupiter.api.Test;
 
-import static de.klosebrothers.specparser.gauge.SpecBuilder.*;
+import static de.klosebrothers.specparser.gauge.SpecBuilder.fromSpecification;
+import static de.klosebrothers.specparser.gauge.SpecBuilder.toSpecification;
 import static de.klosebrothers.specparser.gauge.TestEnvironment.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,7 +19,8 @@ class SpecificationTest {
     void testOfEqualityFromSameGauge() {
         Specification specification1 = toSpecification(gauge);
         Specification specification2 = toSpecification(gauge);
-        assertThat(specification1).isEqualTo(specification2);
+        assertThat(specification1)
+                .isEqualTo(specification2);
     }
 
     @Test
@@ -35,6 +37,7 @@ class SpecificationTest {
         Specification specification = toSpecification(gauge);
         String mdFormatted = fromSpecification(specification);
         Specification actual = toSpecification(mdFormatted);
-        assertThat(actual).isEqualTo(specification);
+        assertThat(actual)
+                .isEqualTo(specification);
     }
 }
