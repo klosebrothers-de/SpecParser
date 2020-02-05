@@ -7,7 +7,7 @@ import static de.klosebrothers.specparser.gauge.datastructure.Util.findFirst;
 
 public class Scenario extends Component {
     public String getHeading() {
-        return findFirst(branches, Heading.class).getHeading();
+        return findFirst(branches, SpecificationHeading.class).getHeading();
     }
 
     public List<Step> getSteps() {
@@ -17,5 +17,10 @@ public class Scenario extends Component {
 
     public Steps getStepsNode(){
         return findFirst(branches, Steps.class);
+    }
+
+    @Override
+    public String toMD() {
+        return "\n";
     }
 }

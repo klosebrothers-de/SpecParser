@@ -1,14 +1,20 @@
 package de.klosebrothers.specparser.gauge;
 
+import de.klosebrothers.specparser.gauge.datastructure.Component;
 import de.klosebrothers.specparser.gauge.datastructure.Specification;
+import de.klosebrothers.specparser.gauge.datastructure.Util;
 import de.klosebrothers.specparser.gauge.parser.GaugeParser;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 
+import java.util.List;
+
+import static de.klosebrothers.specparser.gauge.datastructure.Util.*;
+
 public class SpecBuilder {
     public static String fromSpecification(Specification specification) {
-
-        return null;
+        List<Component> inorder = inorder(specification);
+        return inorder.stream().map(Component::toMD).reduce(String::concat).orElseThrow();
     }
 
     public static Specification toSpecification(String gauge) {

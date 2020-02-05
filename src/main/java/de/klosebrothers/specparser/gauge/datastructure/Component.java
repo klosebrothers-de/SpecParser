@@ -8,4 +8,5 @@ public abstract class Component {
     public void addAllComponents(List<Component> component){
         branches.addAll(component);
     }
+    public abstract String toMD();
 }

@@ -25,4 +25,9 @@ public class Comment extends Component {
     public int hashCode() {
         return Objects.hash(comment);
     }
+
+    @Override
+    public String toMD() {
+        return comment+"\n";
+    }
 }

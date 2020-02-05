@@ -27,6 +27,7 @@ class SpecificationTest {
     private void verifyFromGaugeToSpecAndBack(String gauge) {
         Specification specification = toSpecification(gauge);
         String mdFormatted = fromSpecification(specification);
+        System.out.println(mdFormatted);
         assertThat(toSpecification(mdFormatted)).isEqualTo(specification);
         //assertJ
     }

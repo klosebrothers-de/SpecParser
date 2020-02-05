@@ -1,6 +1,6 @@
 package de.klosebrothers.specparser.gauge.parser;
 
-import de.klosebrothers.specparser.gauge.datastructure.Heading;
+import de.klosebrothers.specparser.gauge.datastructure.SpecificationHeading;
 import org.commonmark.node.Node;
 import org.commonmark.node.Text;
 
@@ -14,7 +14,7 @@ public class HeadingParser extends GaugeParser {
             throw new WrongGaugeParserException(node, this);
 
         String literal = ((Text) node.getFirstChild()).getLiteral();
-        Heading heading = new Heading(literal);
+        SpecificationHeading heading = new SpecificationHeading(literal);
         return new FromTo(node.getNext(), singletonList(heading));
     }
 }

@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Tags extends Component{
+public class Tags extends Component {
     private List<Tag> tags = new ArrayList<>();
 
     public Tags(String[] tags) {
@@ -16,5 +16,10 @@ public class Tags extends Component{
 
     public List<Tag> getTags() {
         return tags;
+    }
+
+    @Override
+    public String toMD() {
+        return "Tags: " + tags.stream().map(Tag::getTag).collect(Collectors.joining(", ")) + "\n";
     }
 }

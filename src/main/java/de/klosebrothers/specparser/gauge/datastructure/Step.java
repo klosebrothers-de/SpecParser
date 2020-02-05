@@ -25,4 +25,9 @@ public class Step extends Component {
     public int hashCode() {
         return Objects.hash(step);
     }
+
+    @Override
+    public String toMD() {
+        return "* " + step + "\n";
+    }
 }

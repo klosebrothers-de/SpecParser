@@ -25,4 +25,9 @@ public class Specification extends Component {
     public List<Comment> getComments() {
         return findAll(branches, Comment.class);
     }
+
+    @Override
+    public String toMD() {
+        return "";
+    }
 }
