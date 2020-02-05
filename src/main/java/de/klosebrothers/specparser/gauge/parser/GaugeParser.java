@@ -18,8 +18,7 @@ public abstract class GaugeParser {
         FromTo fromTo = new FromTo(node, singletonList(parent));
         try {
             return parser.parseAdd(node, parent);
-        } catch (Exception e) {
-
+        } catch (WrongGaugeParserException e) {
         }
         return fromTo;
     }
@@ -32,7 +31,7 @@ public abstract class GaugeParser {
                 node = parse.from;
                 parent.addAllComponents(parse.to);
             }
-        } catch (Exception e) {
+        } catch (WrongGaugeParserException e) {
         }
         return parse;
     }
@@ -55,7 +54,7 @@ public abstract class GaugeParser {
     }
 
     public static final SpecificationParser specificationParser = new SpecificationParser();
-    public static final HeadingParser headingParser = new HeadingParser();
+    public static final SpecificationHeadingParser specificationHeadingParser = new SpecificationHeadingParser();
     public static final CommentParser commentParser = new CommentParser();
     public static final TagsParser tagsParser = new TagsParser();
     public static final ScenarioParser scenarioParser = new ScenarioParser();

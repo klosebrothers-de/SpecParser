@@ -6,7 +6,7 @@ import org.commonmark.node.Text;
 
 import static java.util.Collections.singletonList;
 
-public class HeadingParser extends GaugeParser {
+public class SpecificationHeadingParser extends GaugeParser {
 
     @Override
     protected FromTo parse(Node node) {

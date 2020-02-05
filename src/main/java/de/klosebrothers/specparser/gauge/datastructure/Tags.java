@@ -20,6 +20,6 @@ public class Tags extends Component {
 
     @Override
     public String toMD() {
-        return "Tags: " + tags.stream().map(Tag::getTag).collect(Collectors.joining(", ")) + "\n";
+        return "Tags: " + tags.stream().map(Tag::getTag).collect(Collectors.joining(", ")) + "\n\n";
     }
 }

@@ -10,11 +10,15 @@ import static java.util.Collections.singletonList;
 public class CommentParser extends GaugeParser {
     @Override
     public FromTo parse(Node node) {
-        String commentText = ((Text) node.getFirstChild()).getLiteral();
-        if (!(node instanceof Paragraph) || commentText.startsWith("Tags: ")) {
+        if (!(node instanceof Paragraph)) {
             throw new WrongGaugeParserException(node, this);
         }
 
+        String commentText = ((Text) node.getFirstChild()).getLiteral();
+
+        if (commentText.startsWith("Tags: ")) {
+            throw new WrongGaugeParserException(node, this);
+        }
         Comment comment = new Comment(commentText);
         return new FromTo(node.getNext(), singletonList(comment));
     }

@@ -15,6 +15,13 @@ class SpecificationTest {
     }
 
     @Test
+    void testOfEqualityFromSameGauge() {
+        Specification specification1 = toSpecification(gauge);
+        Specification specification2 = toSpecification(gauge);
+        assertThat(specification1).isEqualTo(specification2);
+    }
+
+    @Test
     void mdFormattedSmallGauge() {
         verifyFromGaugeToSpecAndBack(gaugeSmall);
     }
@@ -27,8 +34,7 @@ class SpecificationTest {
     private void verifyFromGaugeToSpecAndBack(String gauge) {
         Specification specification = toSpecification(gauge);
         String mdFormatted = fromSpecification(specification);
-        System.out.println(mdFormatted);
-        assertThat(toSpecification(mdFormatted)).isEqualTo(specification);
-        //assertJ
+        Specification actual = toSpecification(mdFormatted);
+        assertThat(actual).isEqualTo(specification);
     }
 }

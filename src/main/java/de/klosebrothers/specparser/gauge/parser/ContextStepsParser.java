@@ -9,7 +9,7 @@ public class ContextStepsParser extends GaugeParser {
     @Override
     protected FromTo parse(Node node) {
         ContextSteps steps = new ContextSteps();
-        FromTo fromTo = many(node, steps, new OneOf(stepParser, commentParser));
+        FromTo fromTo = many(node, steps, new MaybeOneOf(stepParser, commentParser));
         return new FromTo(fromTo.from, singletonList(steps));
     }
 }

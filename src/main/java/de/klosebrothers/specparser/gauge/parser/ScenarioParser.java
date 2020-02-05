@@ -8,7 +8,7 @@ public class ScenarioParser extends GaugeParser {
     protected FromTo parse(Node node) {
         Scenario scenario = new Scenario();
         FromTo fromTo;
-        fromTo = headingParser.parseAdd(node, scenario);
+        fromTo = specificationHeadingParser.parseAdd(node, scenario);
         fromTo = many(fromTo.from, scenario, commentParser);
         fromTo = maybe(fromTo.from, scenario, tagsParser);
         fromTo = many(fromTo.from, scenario, commentParser);

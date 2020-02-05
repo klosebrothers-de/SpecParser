@@ -17,7 +17,7 @@ public class TagsParser extends GaugeParser {
 
         String tagString = ((Text) node.getFirstChild()).getLiteral();
         String[] tags = Arrays.stream(tagString.substring(6).split(","))
-                .map(s -> s.replaceAll("\\s","")).toArray(String[]::new);
+                .map(s -> s.replaceAll("\\s", "")).toArray(String[]::new);
         return new FromTo(node.getNext(), singletonList(new Tags(tags)));
     }
 }
