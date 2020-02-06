@@ -38,6 +38,14 @@ class SpecParserTest {
     }
 
     @Test
+    void shouldAddContextStep() {
+        Specification specification = toSpecification(gauge);
+        String stepText = "Context me plz";
+        specification.addContextStep(stepText);
+        assertThat(specification.getContextSteps()).contains(new Step(stepText));
+    }
+
+    @Test
     void addScenarioToSpecification() {
         Scenario scenario = new Scenario();
         Specification specification = new Specification();

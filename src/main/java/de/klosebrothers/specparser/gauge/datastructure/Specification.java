@@ -64,4 +64,9 @@ public class Specification extends Component {
         tearDownSteps.branches.add(new Step(tearDownStepText));
     }
 
+    public void addContextStep(String contextStepText) {
+        ContextSteps contextSteps = addIfNotPresent(branches, ContextSteps.class);
+        contextSteps.branches.add(new Step(contextStepText));
+    }
+
 }
