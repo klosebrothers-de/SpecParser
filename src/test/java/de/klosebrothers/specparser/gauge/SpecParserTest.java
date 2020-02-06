@@ -30,6 +30,14 @@ class SpecParserTest {
     }
 
     @Test
+    void shouldAddTearDownStep() {
+        Specification specification = toSpecification(gauge);
+        String stepText = "Tear me down";
+        specification.addTearDownStep(stepText);
+        assertThat(specification.getTearDownSteps()).contains(new Step(stepText));
+    }
+
+    @Test
     void addScenarioToSpecification() {
         Scenario scenario = new Scenario();
         Specification specification = new Specification();
@@ -90,7 +98,9 @@ class SpecParserTest {
     @Test
     void smallGaugeHasOneScenarioNamedSuccessfulSearch() {
         Specification specification = toSpecification(gaugeSmall);
-        assertThat(specification.getScenarios().get(0).getHeading())
+        Optional<String> heading = specification.getScenarios().get(0).getHeading();
+        assertThat(heading).isPresent();
+        assertThat(heading.get())
                 .isEqualTo("Successful search");
     }
 

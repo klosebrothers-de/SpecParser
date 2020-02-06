@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static de.klosebrothers.specparser.gauge.datastructure.Util.findAll;
-import static de.klosebrothers.specparser.gauge.datastructure.Util.findFirst;
+import static de.klosebrothers.specparser.gauge.datastructure.Util.*;
 
 public class Specification extends Component {
     public List<Scenario> getScenarios() {
@@ -60,5 +59,9 @@ public class Specification extends Component {
         }
     }
 
+    public void addTearDownStep(String tearDownStepText) {
+        TearDownSteps tearDownSteps = addIfNotPresent(branches, TearDownSteps.class);
+        tearDownSteps.branches.add(new Step(tearDownStepText));
+    }
 
 }

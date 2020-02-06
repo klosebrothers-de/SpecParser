@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static de.klosebrothers.specparser.gauge.datastructure.Util.findAll;
-import static de.klosebrothers.specparser.gauge.datastructure.Util.findFirst;
+import static de.klosebrothers.specparser.gauge.datastructure.Util.*;
 
 public class Scenario extends Component {
     public Optional<String> getHeading() {
@@ -28,16 +27,8 @@ public class Scenario extends Component {
     }
 
     public void addStep(String stepText) {
-        addStepsIfNotPresent();
-        Steps steps = findFirst(branches, Steps.class).get();
+        Steps steps = addIfNotPresent(branches, Steps.class);
         steps.branches.add(new Step(stepText));
-    }
-
-    private void addStepsIfNotPresent() {
-        Optional<Steps> maybeSteps = findFirst(branches, Steps.class);
-        if (!maybeSteps.isPresent()) {
-            branches.add(new Steps());
-        }
     }
 
 }
