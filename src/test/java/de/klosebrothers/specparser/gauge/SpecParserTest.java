@@ -31,6 +31,16 @@ class SpecParserTest {
 
 
     @Test
+    void addStepsToScenario() {
+        Scenario scenario = new Scenario();
+        String stepText = "some Step";
+
+        scenario.addStep(stepText);
+
+        assertThat(scenario.getSteps()).containsExactly(new Step(stepText));
+    }
+
+    @Test
     void gaugeShouldHaveThisComment() {
         Specification specification = toSpecification(gauge);
         assertThat(specification.getComments())

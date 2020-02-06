@@ -48,7 +48,11 @@ public class Specification extends Component {
     public void setHeading(String heading) {
         findFirst(branches, SpecificationHeading.class)
                 .ifPresent((a) -> branches.remove(a));
-        branches.add(new SpecificationHeading(heading));
+        branches.add(0, new SpecificationHeading(heading));
+    }
+
+    public void addScenario(Scenario scenario) {
+
     }
 
 

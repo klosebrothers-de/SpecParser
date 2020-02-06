@@ -27,4 +27,17 @@ public class Scenario extends Component {
         return "\n";
     }
 
+    public void addStep(String stepText) {
+        addStepsIfNotPresent();
+        Steps steps = findFirst(branches, Steps.class).get();
+        steps.branches.add(new Step(stepText));
+    }
+
+    private void addStepsIfNotPresent() {
+        Optional<Steps> maybeSteps = findFirst(branches, Steps.class);
+        if (!maybeSteps.isPresent()) {
+            branches.add(new Steps());
+        }
+    }
+
 }
