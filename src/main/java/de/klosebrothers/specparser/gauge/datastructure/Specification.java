@@ -1,6 +1,8 @@
 package de.klosebrothers.specparser.gauge.datastructure;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static de.klosebrothers.specparser.gauge.datastructure.Util.findAll;
 import static de.klosebrothers.specparser.gauge.datastructure.Util.findFirst;
@@ -11,15 +13,19 @@ public class Specification extends Component {
     }
 
     public List<Tag> getTags() {
-        return findFirst(branches, Tags.class).getTags();
+        return findFirst(branches, Tags.class).map(Tags::getTags).orElse(new ArrayList<>());
     }
 
     public List<Step> getTearDownSteps() {
-        return findAll(findFirst(branches, TearDownSteps.class).branches, Step.class);
+        return findFirst(branches, TearDownSteps.class)
+                .map(tearDownSteps -> findAll(tearDownSteps.branches, Step.class))
+                .orElse(new ArrayList<>());
     }
 
     public List<Step> getContextSteps() {
-        return findAll(findFirst(branches, ContextSteps.class).branches, Step.class);
+        return findFirst(branches, ContextSteps.class)
+                .map(tearDownSteps -> findAll(tearDownSteps.branches, Step.class))
+                .orElse(new ArrayList<>());
     }
 
     public List<Comment> getComments() {
@@ -30,4 +36,20 @@ public class Specification extends Component {
     public String toMD() {
         return "";
     }
+
+//    public Scenario getScenariosNode() {
+//        return null;
+//    }
+
+    public Optional<String> getHeading() {
+        return findFirst(branches, SpecificationHeading.class).map(SpecificationHeading::getHeading);
+    }
+
+    public void setHeading(String heading) {
+        findFirst(branches, SpecificationHeading.class)
+                .ifPresent((a) -> branches.remove(a));
+        branches.add(new SpecificationHeading(heading));
+    }
+
+
 }

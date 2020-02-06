@@ -2,13 +2,15 @@ package de.klosebrothers.specparser.gauge.datastructure;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Util {
 
-    public static <A> A findFirst(List<Component> components, Class<A> componentClass) {
-        return (A) components.stream().filter(c -> componentClass.isInstance(c))
-                .findFirst().orElseThrow(() -> new RuntimeException("No Element found from Type " + componentClass.getSimpleName()));
+    public static <A> Optional<A> findFirst(List<Component> components, Class<A> componentClass) {
+        return (Optional<A>) components.stream()
+                .filter(c -> componentClass.isInstance(c))
+                .findFirst();
     }
 
     public static <A> List<A> findAll(List<Component> components, Class<A> componentClass) {

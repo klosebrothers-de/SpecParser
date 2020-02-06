@@ -1,22 +1,34 @@
 package de.klosebrothers.specparser.gauge;
 
-import de.klosebrothers.specparser.gauge.datastructure.Comment;
-import de.klosebrothers.specparser.gauge.datastructure.Specification;
-import de.klosebrothers.specparser.gauge.datastructure.Step;
-import de.klosebrothers.specparser.gauge.datastructure.Tag;
+import de.klosebrothers.specparser.gauge.datastructure.*;
 import de.klosebrothers.specparser.gauge.parser.GaugeParserException;
 import de.klosebrothers.specparser.gauge.parser.WrongGaugeParserException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static de.klosebrothers.specparser.gauge.SpecBuilder.toSpecification;
 import static de.klosebrothers.specparser.gauge.TestEnvironment.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class SpecParserTest {
 
     //Positive Tests
+
+
+    @Test
+    void shouldReplaceHeadingFromSpec() {
+        Specification specification = toSpecification(gauge);
+        String newHeading = "new Heading";
+
+        specification.setHeading(newHeading);
+
+        assertThat(specification.getHeading().get())
+                .isEqualTo(newHeading);
+    }
+
 
     @Test
     void gaugeShouldHaveThisComment() {
@@ -34,6 +46,15 @@ class SpecParserTest {
                 .containsExactly(
                         new Comment("This is a Comment plz parse mee :)"),
                         new Comment("The admin user must be able to search for available products on the search page"));
+    }
+
+    @Test
+    void gaugeCanHaveCommentsBetweenSteps() {
+        String gaugeWithCommentInSteps = gauge.replace("* User must be logged in as \"admin\"\n", "* User must be logged in as \"admin\"\n\nThis is a Comment\n\n");
+        System.out.println(gaugeWithCommentInSteps);
+        Specification specification = toSpecification(gauge);
+        Optional<Steps> stepsNode = specification.getScenarios().get(0).getStepsNode();
+
     }
 
     @Test
