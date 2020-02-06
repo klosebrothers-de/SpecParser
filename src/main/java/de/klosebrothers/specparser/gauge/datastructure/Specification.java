@@ -52,7 +52,12 @@ public class Specification extends Component {
     }
 
     public void addScenario(Scenario scenario) {
-
+        Optional<TearDownSteps> maybeTearDownSteps = findFirst(branches, TearDownSteps.class);
+        if (maybeTearDownSteps.isPresent()) {
+            branches.add(branches.size() - 1, scenario);
+        } else {
+            branches.add(scenario);
+        }
     }
 
 

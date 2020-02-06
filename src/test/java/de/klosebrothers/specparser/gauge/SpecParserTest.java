@@ -29,6 +29,16 @@ class SpecParserTest {
                 .isEqualTo(newHeading);
     }
 
+    @Test
+    void addScenarioToSpecification() {
+        Scenario scenario = new Scenario();
+        Specification specification = new Specification();
+
+        specification.addScenario(scenario);
+
+        assertThat(specification.getScenarios())
+                .containsExactly(scenario);
+    }
 
     @Test
     void addStepsToScenario() {
