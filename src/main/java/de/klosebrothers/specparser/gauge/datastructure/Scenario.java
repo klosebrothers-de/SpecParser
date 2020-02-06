@@ -7,6 +7,13 @@ import java.util.Optional;
 import static de.klosebrothers.specparser.gauge.datastructure.Util.*;
 
 public class Scenario extends Component {
+
+    public void setHeading(String heading) {
+        findFirst(branches, ScenarioHeading.class)
+                .ifPresent((a) -> branches.remove(a));
+        branches.add(0, new ScenarioHeading(heading));
+    }
+
     public Optional<String> getHeading() {
         return findFirst(branches, ScenarioHeading.class).map(ScenarioHeading::getHeading);
     }

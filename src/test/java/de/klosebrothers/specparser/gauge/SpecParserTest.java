@@ -25,7 +25,21 @@ class SpecParserTest {
 
         specification.setHeading(newHeading);
 
+        assertThat(specification.getHeading()).isPresent();
         assertThat(specification.getHeading().get())
+                .isEqualTo(newHeading);
+    }
+
+    @Test
+    void shouldReplaceHeadingFromScenario() {
+        Specification specification = toSpecification(gauge);
+        String newHeading = "new Heading";
+
+        Scenario scenario = specification.getScenarios().get(0);
+        scenario.setHeading(newHeading);
+
+        assertThat(scenario.getHeading()).isPresent();
+        assertThat(scenario.getHeading().get())
                 .isEqualTo(newHeading);
     }
 
