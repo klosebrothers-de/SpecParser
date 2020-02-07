@@ -6,7 +6,7 @@
 
     <groupId>de.klosebrothers</groupId>
     <artifactId>specparser</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 
     <name>Gauge Specification Parser</name>
     <description>This is a Library for parsing a Gauge Specification into a appropriate datastructure</description>
@@ -52,17 +52,35 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>28.2-jre</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.10</version>
+            <scope>provided</scope>
+        </dependency>
+
+
         <dependency>
             <groupId>com.atlassian.commonmark</groupId>
             <artifactId>commonmark</artifactId>
             <version>0.13.1</version>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.5.2</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
