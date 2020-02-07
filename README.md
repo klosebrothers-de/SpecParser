@@ -12,7 +12,7 @@ It supports:
 * Tags
 * Context Steps
 * Tear Down Steps
-* Comments after Tags / before Tear Down Steps
+* Comments
 
 It doesn't support yet:
 
