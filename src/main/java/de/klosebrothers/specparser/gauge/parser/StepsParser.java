@@ -12,7 +12,7 @@ public class StepsParser extends GaugeParser {
             throw new GaugeParserException(this, null, "Can't parse nullpointer, reached end of file?");
         }
         Steps steps = new Steps();
-        many(node, steps, new MaybeOneOf(stepParser, commentParser));
-        return new FromTo(node.getNext(), singletonList(steps));
+        FromTo fromTo = many(node, steps, new MaybeOneOf(stepParser, commentParser));
+        return new FromTo(fromTo.from, singletonList(steps));
     }
 }

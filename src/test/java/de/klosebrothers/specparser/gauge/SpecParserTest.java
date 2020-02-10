@@ -100,11 +100,16 @@ class SpecParserTest {
 
     @Test
     void gaugeCanHaveCommentsBetweenSteps() {
-        String gaugeWithCommentInSteps = gauge.replace("* User must be logged in as \"admin\"\n", "* User must be logged in as \"admin\"\n\nThis is a Comment\n\n");
-        System.out.println(gaugeWithCommentInSteps);
-        Specification specification = toSpecification(gauge);
-        Optional<Steps> stepsNode = specification.getScenarios().get(0).getStepsNode();
-
+        String commentString = "This is a Comment";
+        Specification specification = toSpecification(
+                gauge.replace("* User must be logged in as \"admin\"\n",
+                        "* User must be logged in as \"admin\"\n\n" + commentString + "\n\n"));
+        Optional<Steps> stepsNode = specification.getScenarios().get(1).getStepsNode();
+        assertThat(stepsNode).isPresent();
+        assertThat(stepsNode.get().getAllTree(Step.class))
+                .hasSize(4);
+        assertThat(stepsNode.get().getAll(Comment.class))
+                .contains(new Comment(commentString));
     }
 
     @Test
