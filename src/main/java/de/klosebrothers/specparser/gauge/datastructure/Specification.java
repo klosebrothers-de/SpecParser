@@ -5,30 +5,31 @@ import java.util.List;
 import java.util.Optional;
 
 import static de.klosebrothers.specparser.gauge.datastructure.Util.*;
+import static java.util.Collections.unmodifiableList;
 
 public class Specification extends Component {
     public List<Scenario> getScenarios() {
-        return findAll(branches, Scenario.class);
+        return unmodifiableList(findAll(branches, Scenario.class));
     }
 
     public List<Tag> getTags() {
-        return findFirst(branches, Tags.class).map(Tags::getTags).orElse(new ArrayList<>());
+        return unmodifiableList(findFirst(branches, Tags.class).map(Tags::getTags).orElse(new ArrayList<>()));
     }
 
     public List<Step> getTearDownSteps() {
-        return findFirst(branches, TearDownSteps.class)
+        return unmodifiableList(findFirst(branches, TearDownSteps.class)
                 .map(tearDownSteps -> findAll(tearDownSteps.branches, Step.class))
-                .orElse(new ArrayList<>());
+                .orElse(new ArrayList<>()));
     }
 
     public List<Step> getContextSteps() {
-        return findFirst(branches, ContextSteps.class)
+        return unmodifiableList(findFirst(branches, ContextSteps.class)
                 .map(tearDownSteps -> findAll(tearDownSteps.branches, Step.class))
-                .orElse(new ArrayList<>());
+                .orElse(new ArrayList<>()));
     }
 
     public List<Comment> getComments() {
-        return findAll(branches, Comment.class);
+        return unmodifiableList(findAll(branches, Comment.class));
     }
 
     @Override

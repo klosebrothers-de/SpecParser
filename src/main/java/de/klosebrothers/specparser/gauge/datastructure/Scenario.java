@@ -1,11 +1,13 @@
 package de.klosebrothers.specparser.gauge.datastructure;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static de.klosebrothers.specparser.gauge.datastructure.Util.*;
+import static java.util.Collections.unmodifiableList;
 
 public class Scenario extends Component {
 
@@ -36,9 +38,9 @@ public class Scenario extends Component {
     }
 
     public List<Step> getSteps() {
-        return findFirst(branches, Steps.class)
+        return unmodifiableList(findFirst(branches, Steps.class)
                 .map(steps -> findAll(steps.branches, Step.class))
-                .orElse(new ArrayList<>());
+                .orElse(new ArrayList<>()));
     }
 
     @Override
