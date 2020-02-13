@@ -26,7 +26,7 @@ class SpecParserTest {
         specification.setHeading(newHeading);
 
         assertThat(specification.getHeading()).isPresent();
-        assertThat(specification.getHeading().get())
+        assertThat(specification.getHeading().get().getHeading())
                 .isEqualTo(newHeading);
     }
 
@@ -39,7 +39,7 @@ class SpecParserTest {
         scenario.setHeading(newHeading);
 
         assertThat(scenario.getHeading()).isPresent();
-        assertThat(scenario.getHeading().get())
+        assertThat(scenario.getHeading().get().getHeading())
                 .isEqualTo(newHeading);
     }
 
@@ -123,9 +123,22 @@ class SpecParserTest {
     }
 
     @Test
+    void shouldChangeStepTexts() {
+        Specification specification = toSpecification(gauge);
+        List<Step> steps = specification.getScenarios().get(0).getSteps();
+        steps.forEach(s -> s.setStepText(String.format("* %s", s.getStepText())));
+        assertThat(steps)
+                .containsExactly(
+                        new Step("* User must be logged in as \"admin\""),
+                        new Step("* Open the product search page"),
+                        new Step("* Search for product \"Cup Cakes\""),
+                        new Step("* \"Cup Cakes\" should show up in the search results"));
+    }
+
+    @Test
     void smallGaugeHasOneScenarioNamedSuccessfulSearch() {
         Specification specification = toSpecification(gaugeSmall);
-        Optional<String> heading = specification.getScenarios().get(0).getHeading();
+        Optional<String> heading = specification.getScenarios().get(0).getHeading().map(ScenarioHeading::getHeading);
         assertThat(heading).isPresent();
         assertThat(heading.get())
                 .isEqualTo("Successful search");

@@ -15,18 +15,30 @@ public class Scenario extends Component {
         branches.add(0, new ScenarioHeading(heading));
     }
 
-    public Optional<String> getHeading() {
-        return findFirst(branches, ScenarioHeading.class).map(ScenarioHeading::getHeading);
+    public Optional<Tags> getTags(){
+        return findFirst(branches, Tags.class);
+    }
+
+    public Optional<ScenarioHeading> getHeading() {
+        return findFirst(branches, ScenarioHeading.class);
+    }
+
+    public Optional<Steps> getStepsNode() {
+        return findFirst(branches, Steps.class);
+    }
+
+    public void removeStep(Step step){
+        findFirst(branches, Steps.class).ifPresent( steps -> steps.branches.remove(step));
+    }
+
+    public void removeAllSteps(List<Step> steps){
+        findFirst(branches, Steps.class).ifPresent( stepsNode -> stepsNode.branches.removeAll(steps));
     }
 
     public List<Step> getSteps() {
         return findFirst(branches, Steps.class)
                 .map(steps -> findAll(steps.branches, Step.class))
                 .orElse(new ArrayList<>());
-    }
-
-    public Optional<Steps> getStepsNode() {
-        return findFirst(branches, Steps.class);
     }
 
     @Override

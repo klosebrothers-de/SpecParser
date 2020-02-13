@@ -1,16 +1,16 @@
 package de.klosebrothers.specparser.gauge.datastructure;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
 public class Step extends Component {
-    private String step;
+    @Getter @Setter
+    private String stepText;
 
-    public Step(String step) {
-        this.step = step;
-    }
-
-    public String getStep() {
-        return step;
+    public Step(String stepText) {
+        this.stepText = stepText;
     }
 
     @Override
@@ -18,16 +18,23 @@ public class Step extends Component {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Step step1 = (Step) o;
-        return step.equals(step1.step);
+        return stepText.equals(step1.stepText);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(step);
+        return Objects.hash(stepText);
     }
 
     @Override
     public String toMD() {
-        return "* " + step + "\n";
+        return "* " + stepText + "\n";
+    }
+
+    @Override
+    public String toString() {
+        return "Step{" +
+                "stepText='" + stepText + '\'' +
+                '}';
     }
 }

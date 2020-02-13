@@ -1,16 +1,16 @@
 package de.klosebrothers.specparser.gauge.datastructure;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
 public class Comment extends Component {
-    private String comment;
+
+    @Setter @Getter private String comment;
 
     public Comment(String comment) {
         this.comment = comment;
-    }
-
-    public String getComment() {
-        return comment;
     }
 
     @Override

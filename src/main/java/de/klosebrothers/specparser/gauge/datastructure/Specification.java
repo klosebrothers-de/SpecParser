@@ -40,8 +40,8 @@ public class Specification extends Component {
 //        return null;
 //    }
 
-    public Optional<String> getHeading() {
-        return findFirst(branches, SpecificationHeading.class).map(SpecificationHeading::getHeading);
+    public Optional<SpecificationHeading> getHeading() {
+        return findFirst(branches, SpecificationHeading.class);
     }
 
     public void setHeading(String heading) {
