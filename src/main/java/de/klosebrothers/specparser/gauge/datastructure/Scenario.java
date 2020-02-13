@@ -3,6 +3,7 @@ package de.klosebrothers.specparser.gauge.datastructure;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static de.klosebrothers.specparser.gauge.datastructure.Util.*;
 
@@ -38,4 +39,20 @@ public class Scenario extends Component {
         steps.branches.add(new Step(stepText));
     }
 
+    public void addStep(int index, String stepText) {
+        Steps steps = addIfNotPresent(branches, Steps.class);
+        steps.branches.add(index, new Step(stepText));
+    }
+
+    public void addAllSteps(List<String> stringSteps){
+        List<Step> steps = stringSteps.stream().map(Step::new).collect(Collectors.toList());
+        Steps stepsNode = addIfNotPresent(branches, Steps.class);
+        stepsNode.branches.addAll(steps);
+    }
+
+    public void addAllSteps(int index, List<String> stringSteps){
+        List<Step> steps = stringSteps.stream().map(Step::new).collect(Collectors.toList());
+        Steps stepsNode = addIfNotPresent(branches, Steps.class);
+        stepsNode.branches.addAll(index, steps);
+    }
 }
