@@ -7,6 +7,7 @@ import org.commonmark.node.Text;
 
 import java.util.Arrays;
 
+import static de.klosebrothers.specparser.gauge.datastructure.Tags.tagsStringToTagsArray;
 import static java.util.Collections.singletonList;
 
 public class TagsParser extends GaugeParser {
@@ -16,8 +17,7 @@ public class TagsParser extends GaugeParser {
             throw new WrongGaugeParserException(node, this);
 
         String tagString = ((Text) node.getFirstChild()).getLiteral();
-        String[] tags = Arrays.stream(tagString.substring(6).split(","))
-                .map(s -> s.replaceAll("\\s", "")).toArray(String[]::new);
+        String[] tags = tagsStringToTagsArray(tagString);
         return new FromTo(node.getNext(), singletonList(new Tags(tags)));
     }
 }

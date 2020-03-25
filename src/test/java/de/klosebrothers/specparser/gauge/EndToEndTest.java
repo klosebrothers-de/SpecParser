@@ -9,7 +9,6 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 class EndToEndTest {
 
     @Test
-    @Disabled
     void converting_string_to_specification_and_back_again_should_result_in_the_original_string() {
         String expected = removeEmptyLines(TestEnvironment.gauge);
 

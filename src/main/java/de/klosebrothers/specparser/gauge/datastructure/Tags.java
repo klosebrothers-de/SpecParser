@@ -26,4 +26,9 @@ public class Tags extends Component {
     public String toMD() {
         return "Tags: " + tags.stream().map(Tag::getTag).collect(Collectors.joining(", ")) + "\n\n";
     }
+
+    public static  String[] tagsStringToTagsArray(String tagString) {
+        return Arrays.stream(tagString.substring(6).split(","))
+                .map(s -> s.replaceAll("\\s", "")).toArray(String[]::new);
+    }
 }

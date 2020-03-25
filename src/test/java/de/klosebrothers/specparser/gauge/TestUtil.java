@@ -17,8 +17,7 @@ public class TestUtil {
         return Arrays.stream(from.split("\n"))
                 .filter(line -> Arrays.stream(what)
                         .noneMatch(line::contains))
-                .reduce((t, op) -> t.concat(op + "\n"))
-                .orElse("");
+                .collect(Collectors.joining("\n"));
     }
 
     public static String addLineAt(String from, int at, String what) {

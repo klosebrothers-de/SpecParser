@@ -13,9 +13,7 @@ public class SpecificationParser extends GaugeParser {
         Specification specification = new Specification();
         fromTo = many(node.getFirstChild(), specification, commentParser);
         fromTo = specificationHeadingParser.parseAdd(fromTo.from, specification);
-        fromTo = many(fromTo.from, specification, commentParser);
-        fromTo = maybe(fromTo.from, specification, tagsParser);
-        fromTo = many(fromTo.from, specification, commentParser);
+        fromTo = many(fromTo.from, specification, commentTagParser);
         fromTo = maybe(fromTo.from, specification, contextStepsParser);
         fromTo = many(fromTo.from, specification, commentParser);
         fromTo = scenarioParser.parseAdd(fromTo.from, specification);

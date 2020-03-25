@@ -10,22 +10,20 @@ import org.commonmark.node.Text;
 
 import java.util.ArrayList;
 
-import static java.util.Collections.singletonList;
-
-public class CommentParser extends GaugeParser {
+public class CommentTagParser extends GaugeParser {
     @Override
-    public FromTo parse(Node node) {
+    protected FromTo parse(Node node) {
         if (!(node instanceof Paragraph)) {
             throw new WrongGaugeParserException(node, this);
         }
         ArrayList<Component> result = new ArrayList<>();
         Node itNode = node.getFirstChild();
-        while (itNode != null) {
-            if (!(itNode instanceof SoftLineBreak)) {
+        while (itNode != null){
+            if (!(itNode instanceof SoftLineBreak)){
                 String literal = ((Text) itNode).getLiteral();
-                if (literal.startsWith("Tags: ")) {
-                    throw new WrongGaugeParserException(itNode, this);
-                } else {
+                if (literal.startsWith("Tags: ")){
+                    result.add(new Tags(Tags.tagsStringToTagsArray(literal)));
+                }else {
                     result.add(new Comment(literal));
                 }
             }

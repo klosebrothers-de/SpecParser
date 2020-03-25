@@ -1,7 +1,6 @@
 # Search specification
-Tags: search, admin
-
 The admin user must be able to search for available products on the search page
+Tags: search, admin
 
 ## Successful search
 Tags: successful
