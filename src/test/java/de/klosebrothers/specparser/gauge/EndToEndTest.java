@@ -1,12 +1,10 @@
 package de.klosebrothers.specparser.gauge;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import static de.klosebrothers.specparser.gauge.TestUtil.removeEmptyLines;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 class EndToEndTest {
 
@@ -20,9 +18,5 @@ class EndToEndTest {
         assertThat(removeEmptyLines(actual)).isEqualTo(expected);
     }
 
-    private String removeEmptyLines(String expected) {
-        return Arrays.stream(expected.split("\n"))
-                .filter(s -> !s.trim().isEmpty())
-                .collect(Collectors.joining("\n"));
-    }
+
 }

@@ -10,6 +10,8 @@ import java.util.Optional;
 
 import static de.klosebrothers.specparser.gauge.SpecBuilder.toSpecification;
 import static de.klosebrothers.specparser.gauge.TestEnvironment.*;
+import static de.klosebrothers.specparser.gauge.TestUtil.addLineAt;
+import static de.klosebrothers.specparser.gauge.TestUtil.deleteLineWith;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -17,6 +19,13 @@ class SpecParserTest {
 
     //Positive Tests
 
+
+    @Test
+    void shouldHaveTagsWhenCommentBetweenTagsAndHeading() {
+        String gaugeWithCommentBetween = addLineAt(gauge, 1, "This is a comment");
+        Specification specification = toSpecification(gaugeWithCommentBetween);
+        assertThat(specification.getTags()).containsExactly(new Tag("search"),new Tag("admin"));
+    }
 
     @Test
     void shouldReplaceHeadingFromSpec() {

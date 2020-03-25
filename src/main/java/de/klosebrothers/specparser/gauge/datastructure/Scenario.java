@@ -1,7 +1,6 @@
 package de.klosebrothers.specparser.gauge.datastructure;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,8 +16,8 @@ public class Scenario extends Component {
         branches.add(0, new ScenarioHeading(heading));
     }
 
-    public Optional<Tags> getTags(){
-        return findFirst(branches, Tags.class);
+    public List<Tag> getTags(){
+        return getOrAddIfNotPresent(branches, Tags.class).getTags();
     }
 
     public Optional<ScenarioHeading> getHeading() {
@@ -49,24 +48,24 @@ public class Scenario extends Component {
     }
 
     public void addStep(String stepText) {
-        Steps steps = addIfNotPresent(branches, Steps.class);
+        Steps steps = getOrAddIfNotPresent(branches, Steps.class);
         steps.branches.add(new Step(stepText));
     }
 
     public void addStep(int index, String stepText) {
-        Steps steps = addIfNotPresent(branches, Steps.class);
+        Steps steps = getOrAddIfNotPresent(branches, Steps.class);
         steps.branches.add(index, new Step(stepText));
     }
 
     public void addAllSteps(List<String> stringSteps){
         List<Step> steps = stringSteps.stream().map(Step::new).collect(Collectors.toList());
-        Steps stepsNode = addIfNotPresent(branches, Steps.class);
+        Steps stepsNode = getOrAddIfNotPresent(branches, Steps.class);
         stepsNode.branches.addAll(steps);
     }
 
     public void addAllSteps(int index, List<String> stringSteps){
         List<Step> steps = stringSteps.stream().map(Step::new).collect(Collectors.toList());
-        Steps stepsNode = addIfNotPresent(branches, Steps.class);
+        Steps stepsNode = getOrAddIfNotPresent(branches, Steps.class);
         stepsNode.branches.addAll(index, steps);
     }
 }

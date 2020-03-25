@@ -9,6 +9,10 @@ import java.util.stream.Collectors;
 public class Tags extends Component {
     private List<Tag> tags = new ArrayList<>();
 
+    public Tags() {
+        this(new String[0]);
+    }
+
     public Tags(String[] tags) {
         List<Tag> collect = Arrays.stream(tags).map(Tag::new).collect(Collectors.toList());
         this.tags.addAll(collect);

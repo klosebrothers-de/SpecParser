@@ -13,7 +13,7 @@ public class Specification extends Component {
     }
 
     public List<Tag> getTags() {
-        return unmodifiableList(findFirst(branches, Tags.class).map(Tags::getTags).orElse(new ArrayList<>()));
+        return getOrAddIfNotPresent(branches, Tags.class).getTags();
     }
 
     public List<Step> getTearDownSteps() {
@@ -61,12 +61,12 @@ public class Specification extends Component {
     }
 
     public void addTearDownStep(String tearDownStepText) {
-        TearDownSteps tearDownSteps = addIfNotPresent(branches, TearDownSteps.class);
+        TearDownSteps tearDownSteps = getOrAddIfNotPresent(branches, TearDownSteps.class);
         tearDownSteps.branches.add(new Step(tearDownStepText));
     }
 
     public void addContextStep(String contextStepText) {
-        ContextSteps contextSteps = addIfNotPresent(branches, ContextSteps.class);
+        ContextSteps contextSteps = getOrAddIfNotPresent(branches, ContextSteps.class);
         contextSteps.branches.add(new Step(contextStepText));
     }
 

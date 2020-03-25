@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class Util {
 
-    public static <A extends Component> A addIfNotPresent(List<Component> components, Class<A> componentClass) {
+    public static <A extends Component> A getOrAddIfNotPresent(List<Component> components, Class<A> componentClass) {
         Optional<A> maybeSteps = findFirst(components, componentClass);
         if (maybeSteps.isPresent()) {
             return maybeSteps.get();

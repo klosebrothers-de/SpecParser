@@ -5,7 +5,6 @@ import com.google.common.io.Resources;
 import lombok.SneakyThrows;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 import static com.google.common.io.Resources.getResource;
 
@@ -20,11 +19,5 @@ public class TestEnvironment {
         return Resources.toString(getResource(resourceName), StandardCharsets.UTF_8);
     }
 
-    public static String deleteLineWith(String from, String... what) {
-        return Arrays.stream(from.split("\n"))
-                .filter(line -> Arrays.stream(what)
-                        .noneMatch(line::contains))
-                .reduce((t, op) -> t.concat(op + "\n"))
-                .orElse("");
-    }
+
 }
